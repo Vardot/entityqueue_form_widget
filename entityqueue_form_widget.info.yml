@@ -1,0 +1,8 @@
+name: Entityqueue Form Widget
+type: module
+description: 'Allows editors to add content to an entityqueue from in the same add/edit form'
+package: Entityqueue
+core: 8.x
+version: 1.0
+dependencies:
+  - entityqueue
