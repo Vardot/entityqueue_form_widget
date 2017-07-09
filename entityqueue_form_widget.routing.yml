@@ -4,4 +4,4 @@ entityqueue_form_widget.content:
     _controller: 'Drupal\entityqueue_form_widget\Controller\EntityQueueFormWidgetController::content'
     _title: 'Entityqueue Form Widget'
   requirements:
-    _permission: 'administer entityqueue+manipulate entityqueues+manipulate all entityqueues'
+    _permission: 'access content'

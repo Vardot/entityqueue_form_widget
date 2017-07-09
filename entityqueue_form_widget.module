@@ -15,12 +15,12 @@ function entityqueue_form_widget_form_node_form_alter(&$form, FormStateInterface
   $node = $form_state->getFormObject()->getEntity();
   $entity_id = $node->id();
 
-
   $entity_queue_obj = new EntityQueueUIController();
   $node_entityqueue_build = $entity_queue_obj->entityGetAllowedSubqueList($node);
   $allowed_entityqueues = array_keys($node_entityqueue_build['table']['#rows']);
 
-  if (!empty($allowed_entityqueues)) {
+  if (!empty($allowed_entityqueues)) { //Check if there is any entityqueues to show/not show the widget
+
     /* Get all checked queues for this entity */
     $query_checked_queues = db_select('entity_subqueue__items')
       ->distinct()
@@ -30,12 +30,9 @@ function entityqueue_form_widget_form_node_form_alter(&$form, FormStateInterface
       ->fetchAllAssoc('entity_id'));
 
     $url = Url::fromRoute('entity.entity_queue.collection');
-
     $form['entityqueue_form_widget'] = [
       '#type' => 'details',
       '#title' => t('Entityqeues settings'),
-      '#access' => \Drupal::currentUser()
-        ->hasPermission('administer entityqueue+manipulate entityqueues+manipulate all entityqueues'),
       '#group' => 'advanced',
       '#tree' => TRUE,
       '#weight' => 100,
@@ -45,35 +42,38 @@ function entityqueue_form_widget_form_node_form_alter(&$form, FormStateInterface
     $form['entityqueue_form_widget']['entityqueues'] = [];
     foreach ($allowed_entityqueues as $allowed_entityqueue) {
 
-      $entity_subqueue = \Drupal::entityManager()
+      if (\Drupal::currentUser()->hasPermission('update '.$allowed_entityqueue.' entityqueue'))
+      {
+        $entity_subqueue = \Drupal::entityManager()
         ->getStorage('entity_subqueue')
         ->load($allowed_entityqueue);
-      $number_of_items = count($entity_subqueue->get('items')->getValue());
+        $number_of_items = count($entity_subqueue->get('items')->getValue());
 
-      $queue_size = $entity_subqueue->getQueue();
-      $max_size = $queue_size->getMaximumSize();
-      $max_size = ($max_size == '0' ? 'unlimited' : $max_size);
+        $queue_size = $entity_subqueue->getQueue();
+        $max_size = $queue_size->getMaximumSize();
+        $max_size = ($max_size == '0' ? 'unlimited' : $max_size);
 
-      $checked_flag = 0;
-      if (in_array($allowed_entityqueue, $result_checked_queues)) {
-        $checked_flag = 1;
-      }
+        $checked_flag = 0;
+        if (in_array($allowed_entityqueue, $result_checked_queues)) {
+          $checked_flag = 1;
+        }
 
-      $checkbox_item = [
-        '#type' => 'checkbox',
-        '#title' => t('@queue_title <i>(@number_of_items out of @$max_size items)</i>', [
-          '@queue_title' => $node_entityqueue_build['table']['#rows'][$allowed_entityqueue]['data']['label'],
-          '@number_of_items' => $number_of_items,
-          '@$max_size' => $max_size,
-        ]),
-        '#default_value' => $checked_flag,
-        '#id' => $allowed_entityqueue,
-      ];
+        $checkbox_item = [
+          '#type' => 'checkbox',
+          '#title' => t('@queue_title <i>(@number_of_items out of @$max_size items)</i>', [
+            '@queue_title' => $node_entityqueue_build['table']['#rows'][$allowed_entityqueue]['data']['label'],
+            '@number_of_items' => $number_of_items,
+            '@$max_size' => $max_size,
+          ]),
+          '#default_value' => $checked_flag,
+          '#id' => $allowed_entityqueue,
+        ];
 
-      $form['entityqueue_form_widget']['entityqueues'][$allowed_entityqueue] = $checkbox_item;
-      /* To Do: add entityqueueu maximum number to the #title */
-    }
+        $form['entityqueue_form_widget']['entityqueues'][$allowed_entityqueue] = $checkbox_item;
+      } // End if currentUser()->hasPermission
+    } // End foreach
 
+    /* Calling submit handler */
     foreach (array_keys($form['actions']) as $action) {
       if ($action != 'preview' && isset($form['actions'][$action]['#type']) && $form['actions'][$action]['#type'] === 'submit') {
         $form['actions'][$action]['#submit'][] = 'entityqueue_form_widget_form_node_form_submit';
@@ -106,7 +106,7 @@ function entityqueue_form_widget_form_node_form_submit($form, FormStateInterface
           $subqueue->save();
         }
       }
-    }
+    } // End foreach added
 
     /* Remove entity from all un-checked queues */
     $eqs_machine_names_delete = array_keys($values['entityqueues'], "0");
@@ -123,7 +123,7 @@ function entityqueue_form_widget_form_node_form_submit($form, FormStateInterface
           $subqueue->save();
         }
       }
-    }
+    } // End foreach deleted
   }
 } // End of entityqueue_form_widget_form_node_form_submit
 
