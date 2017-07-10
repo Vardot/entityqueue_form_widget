@@ -7,7 +7,7 @@
 
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Url;
-use Drupal\entityqueue\Controller\EntityQueueUIController;
+//use Drupal\entityqueue\Controller\EntityQueueUIController;
 use Drupal\entityqueue\Entity\EntitySubqueue;
 
 function entityqueue_form_widget_form_node_form_alter(&$form, FormStateInterface $form_state) {
@@ -15,9 +15,17 @@ function entityqueue_form_widget_form_node_form_alter(&$form, FormStateInterface
   $node = $form_state->getFormObject()->getEntity();
   $entity_id = $node->id();
 
+  //could be used when there is a method to get all allowed queues per entity
+  //$entity_bundle =  $node->bundle();
+
+  /*  Works with entityqueue module version 8.x-1.0-alpha6+5-dev
   $entity_queue_obj = new EntityQueueUIController();
   $node_entityqueue_build = $entity_queue_obj->entityGetAllowedSubqueList($node);
   $allowed_entityqueues = array_keys($node_entityqueue_build['table']['#rows']);
+  */
+
+  /*  Works with entityqueue module version 8.x-1.0-alpha6 */
+  $allowed_entityqueues = entityQGetAllowedSubqueList($node);
 
   if (!empty($allowed_entityqueues)) { //Check if there is any entityqueues to show/not show the widget
 
@@ -45,12 +53,12 @@ function entityqueue_form_widget_form_node_form_alter(&$form, FormStateInterface
       if (\Drupal::currentUser()->hasPermission('update '.$allowed_entityqueue.' entityqueue'))
       {
         $entity_subqueue = \Drupal::entityManager()
-        ->getStorage('entity_subqueue')
-        ->load($allowed_entityqueue);
+          ->getStorage('entity_subqueue')
+          ->load($allowed_entityqueue);
         $number_of_items = count($entity_subqueue->get('items')->getValue());
 
-        $queue_size = $entity_subqueue->getQueue();
-        $max_size = $queue_size->getMaximumSize();
+        $queue_details = $entity_subqueue->getQueue();
+        $max_size = $queue_details->getMaximumSize();
         $max_size = ($max_size == '0' ? 'unlimited' : $max_size);
 
         $checked_flag = 0;
@@ -61,7 +69,7 @@ function entityqueue_form_widget_form_node_form_alter(&$form, FormStateInterface
         $checkbox_item = [
           '#type' => 'checkbox',
           '#title' => t('@queue_title <i>(@number_of_items out of @$max_size items)</i>', [
-            '@queue_title' => $node_entityqueue_build['table']['#rows'][$allowed_entityqueue]['data']['label'],
+            '@queue_title' =>  $queue_details->label(),
             '@number_of_items' => $number_of_items,
             '@$max_size' => $max_size,
           ]),
@@ -127,4 +135,17 @@ function entityqueue_form_widget_form_node_form_submit($form, FormStateInterface
   }
 } // End of entityqueue_form_widget_form_node_form_submit
 
-
+function entityQGetAllowedSubqueList($node) {
+  $allowed_entityqueues = array();
+  $subqueues = EntitySubqueue::loadMultiple();
+  foreach ($subqueues as $subqueue) {
+    $queue = $subqueue->getQueue();
+    $queue_settings = $queue->getEntitySettings();
+    $target_bundles = !empty($queue_settings['handler_settings']['target_bundles']) ? $queue_settings['handler_settings']['target_bundles'] : [];
+    if ($queue_settings['target_type'] == $node->getEntityTypeId() && (empty($target_bundles) || in_array($node->bundle(), $target_bundles)))
+    {
+      $allowed_entityqueues[] = $queue->id();
+    }
+  }
+  return $allowed_entityqueues;
+}
