@@ -113,16 +113,30 @@ function entityqueue_form_widget_form_node_form_submit($form, FormStateInterface
 function entity_qget_allowed_subque_list($node) {
   $allowed_entityqueues = [];
   $subqueues = EntitySubqueue::loadMultiple();
-  foreach ($subqueues as $subqueue) {
-    $queue = $subqueue->getQueue();
-    $queue_settings = $queue->getEntitySettings();
-    $target_bundles = !empty($queue_settings['handler_settings']['target_bundles']) ? $queue_settings['handler_settings']['target_bundles'] : [];
 
-    if ($queue_settings['target_type'] == $node->getEntityTypeId() && (empty($target_bundles) ||  in_array($node->bundle(), $target_bundles))) {
-      $id = $queue->id();
-      $allowed_entityqueues[$id][] = $subqueue->id();
+  if (isset($subqueues) && count($subqueues) > 0) {
+    foreach ($subqueues as $subqueue) {
+      $queue = $subqueue->getQueue();
+      if (isset($queue)) {
+        $queue_settings = $queue->getEntitySettings();
+        $target_bundles = [];
+        if(isset($queue_settings)
+           && isset($queue_settings['handler_settings'])
+           && isset($queue_settings['handler_settings']['target_bundles'])
+           && !empty($queue_settings['handler_settings']['target_bundles'])) {
+          $target_bundles = $queue_settings['handler_settings']['target_bundles'];
+        }
+
+        if ($queue_settings['target_type'] == $node->getEntityTypeId()
+          && (empty($target_bundles) ||  in_array($node->bundle(), $target_bundles))) {
+
+          $id = $queue->id();
+          $allowed_entityqueues[$id][] = $subqueue->id();
+        }
+      }
     }
   }
+
   return $allowed_entityqueues;
 }
 
