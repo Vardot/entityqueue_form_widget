@@ -35,7 +35,7 @@ function entityqueue_form_widget_form_node_form_alter(&$form, FormStateInterface
     $url = Url::fromRoute('entity.entity_queue.collection');
     $form['entityqueue_form_widget'] = [
       '#type' => 'details',
-      '#title' => t('Entityqeues settings'),
+      '#title' => t('Entityqueues settings'),
       '#group' => 'advanced',
       '#tree' => TRUE,
       '#weight' => 100,
