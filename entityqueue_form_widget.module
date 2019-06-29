@@ -45,7 +45,7 @@ function entityqueue_form_widget_form_node_form_alter(&$form, FormStateInterface
     $form['entityqueue_form_widget']['entityqueues'] = [];
     foreach ($allowed_entityqueues as $allowed_entityqueue_group) {
       foreach ($allowed_entityqueue_group as $allowed_entityqueue) {
-        if (\Drupal::currentUser()->hasPermission('update ' . $allowed_entityqueue . ' entityqueue')) {
+        if (\Drupal::currentUser()->hasPermission('update ' . $allowed_entityqueue . ' entityqueue') || \Drupal::currentUser()->hasPermission('manipulate all entityqueues')) {
           $form['entityqueue_form_widget']['entityqueues'][$allowed_entityqueue] = _prepair_checkbox($entity_id, $allowed_entityqueue);
         } // End if currentUser()->hasPermission
       } // End foreach
