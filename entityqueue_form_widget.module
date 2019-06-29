@@ -39,7 +39,7 @@ function entityqueue_form_widget_form_node_form_alter(&$form, FormStateInterface
       '#group' => 'advanced',
       '#tree' => TRUE,
       '#weight' => 100,
-      '#markup' => '<p>' . t('Choose from the available entityqueues below to push this content to. To reorder and manage each queue, please visit the @entityqueue_management_page', ['@entityqueue_management_page' => \Drupal::l('Entityqueue management page', $url)]) . '</p>',
+      '#markup' => '<p>' . t('Choose from the available entityqueues below to push this content to. To reorder and manage each queue, please visit the @entityqueue_management_page', ['@entityqueue_management_page' => \Drupal::l(t('Entityqueue management page'), $url)]) . '</p>',
     ];
 
     $form['entityqueue_form_widget']['entityqueues'] = [];
