@@ -1,0 +1,43 @@
+{
+  "name": "drupal/entityqueue_form_widget",
+  "description": "A handy module to populate a form element in the sidebar of node's add and edit pages to allow editors to add content to entityqueues directly from add/edit forms.",
+  "type": "drupal-module",
+  "homepage": "https://www.drupal.org/project/entityqueue_form_widget",
+  "license": "GPL-2.0-or-later",
+  "minimum-stability": "dev",
+  "authors": [
+    {
+      "name": "Mohammed J. Razem",
+      "homepage": "https://www.drupal.org/u/mohammed-j-razem",
+      "role": "Maintainer"
+    },
+    {
+      "name": "Tareq Elayyan",
+      "homepage": "https://www.drupal.org/u/tareq_elayyan",
+      "role": "Maintainer"
+    },
+    {
+      "name": "Rajab Natshah",
+      "homepage": "https://www.drupal.org/u/rajabnatshah",
+      "role": "Maintainer"
+    }
+  ],
+  "support": {
+    "issues": "https://www.drupal.org/project/issues/entityqueue_form_widget",
+    "source": "http://cgit.drupalcode.org/entityqueue_form_widget"
+  },
+  "repositories": {
+    "drupal": {
+      "type": "composer",
+      "url": "https://packages.drupal.org/8"
+    }
+  },
+  "require": {
+    "drupal/entityqueue": "~1.0"
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-8.x-1.x": "8.1.x-dev"
+    }
+  }
+}
