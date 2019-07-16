@@ -7,26 +7,18 @@
 
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Url;
+use Drupal\Core\Link;
 use Drupal\entityqueue\Entity\EntitySubqueue;
 
 /**
- * Hook form alter.
+ * Implements hook_form_node_form_alter().
  */
 function entityqueue_form_widget_form_node_form_alter(&$form, FormStateInterface $form_state) {
 
   $node = $form_state->getFormObject()->getEntity();
   $entity_id = $node->id();
 
-  /* Future use: when there is a method to get allowed queues per content type
-  $entity_bundle =  $node->bundle();
-   */
-  /*  Works with entityqueue module version 8.x-1.0-alpha6+5-dev
-  $entity_queue_obj = new EntityQueueUIController();
-  $node_entityqueue_build=$entity_queue_obj->entityGetAllowedSubqueList($node);
-  $allowed_entityqueues = array_keys($node_entityqueue_build['table']['#rows']);
-   */
-
-  /*  Works with entityqueue module version 8.x-1.0-alpha6 */
+  // Works with entityqueue module version 8.x-1.0-alpha6 .
   $allowed_entityqueues = entity_qget_allowed_subque_list($node);
 
   // Check if there is any entityqueues to show/not show the widget.
@@ -39,19 +31,19 @@ function entityqueue_form_widget_form_node_form_alter(&$form, FormStateInterface
       '#group' => 'advanced',
       '#tree' => TRUE,
       '#weight' => 100,
-      '#markup' => '<p>' . t('Choose from the available entityqueues below to push this content to. To reorder and manage each queue, please visit the @entityqueue_management_page', ['@entityqueue_management_page' => \Drupal::l(t('Entityqueue management page'), $url)]) . '</p>',
+      '#markup' => '<p>' . t('Choose from the available entityqueues below to push this content to. To reorder and manage each queue, please visit the @entityqueue_management_page', ['@entityqueue_management_page' => Link::fromTextAndUrl(t('Entityqueue management page'), $url)]) . '</p>',
     ];
 
     $form['entityqueue_form_widget']['entityqueues'] = [];
     foreach ($allowed_entityqueues as $allowed_entityqueue_group) {
       foreach ($allowed_entityqueue_group as $allowed_entityqueue) {
         if (\Drupal::currentUser()->hasPermission('update ' . $allowed_entityqueue . ' entityqueue') || \Drupal::currentUser()->hasPermission('manipulate all entityqueues')) {
-          $form['entityqueue_form_widget']['entityqueues'][$allowed_entityqueue] = _prepair_checkbox($entity_id, $allowed_entityqueue);
-        } // End if currentUser()->hasPermission
-      } // End foreach
+          $form['entityqueue_form_widget']['entityqueues'][$allowed_entityqueue] = _prepare_checkbox($entity_id, $allowed_entityqueue);
+        }
+      }
     }
 
-    /* Calling submit handler */
+    // Calling submit handler.
     foreach (array_keys($form['actions']) as $action) {
       if ($action != 'preview' && isset($form['actions'][$action]['#type']) && $form['actions'][$action]['#type'] === 'submit') {
         $form['actions'][$action]['#submit'][] = 'entityqueue_form_widget_form_node_form_submit';
@@ -61,7 +53,12 @@ function entityqueue_form_widget_form_node_form_alter(&$form, FormStateInterface
 }
 
 /**
- * Submit handler.
+ * Submit form function.
+ *
+ * @param object $form
+ *   The Form.
+ * @param Drupal\Core\Form\FormStateInterface $form_state
+ *   The Form.
  */
 function entityqueue_form_widget_form_node_form_submit($form, FormStateInterface $form_state) {
   $node = $form_state->getFormObject()->getEntity();
@@ -79,32 +76,43 @@ function entityqueue_form_widget_form_node_form_submit($form, FormStateInterface
       foreach ($subqueues as $subqueue) {
         $items = $subqueue->get('items')->getValue();
         if (($item_key = array_search($entity_id, array_column($items, 'target_id'))) === FALSE) {
-          $new_aitem = array(
+          $new_aitem = [
             "target_id" => $entity_id,
-          );
+          ];
           array_push($items, $new_aitem);
           $subqueue->set('items', $items);
           $subqueue->save();
         }
       }
-    } // End foreach added
+    }
 
-    /* Remove entity from all un-checked queues */
+    // Remove entity from all un-checked queues.
     $eqs_machine_names_delete = array_keys($values['entityqueues'], "0");
     foreach ($eqs_machine_names_delete as $eqs_machine_name) {
-      $entity_subqueue = \Drupal::entityManager()->getStorage('entity_subqueue')->load($eqs_machine_name);
+      $entity_subqueue = \Drupal::entityTypeManager()
+        ->getStorage('entity_subqueue')
+        ->load($eqs_machine_name);
+
       $items = $entity_subqueue->get('items')->getValue();
       if (($item_key = array_search($entity_id, array_column($items, 'target_id'))) !== FALSE) {
         unset($items[$item_key]);
         $entity_subqueue->set('items', $items);
         $entity_subqueue->save();
       }
-    } // End foreach deleted
+    }
   }
 }
 
 /**
- * Content method: used to show module home page content.
+ * Get allowed sub queue for entityqueues list.
+ *
+ * Used to show module home page content.
+ *
+ * @param object $node
+ *   A node.
+ *
+ * @return array
+ *   List of allowed sub-queue
  */
 function entity_qget_allowed_subque_list($node) {
   $allowed_entityqueues = [];
@@ -116,7 +124,8 @@ function entity_qget_allowed_subque_list($node) {
       if (isset($queue)) {
         $queue_settings = $queue->getEntitySettings();
         $target_bundles = [];
-        if(isset($queue_settings)
+
+        if (isset($queue_settings)
            && isset($queue_settings['handler_settings'])
            && isset($queue_settings['handler_settings']['target_bundles'])
            && !empty($queue_settings['handler_settings']['target_bundles'])) {
@@ -136,18 +145,30 @@ function entity_qget_allowed_subque_list($node) {
   return $allowed_entityqueues;
 }
 
-function _prepair_checkbox($entity_id, $allowed_entityqueue) {
-  /* Get all checked queues for this entity */
-  $query_checked_queues = db_select('entity_subqueue__items')
+/**
+ * Prepare a checkbox for allowed entityqueue.
+ *
+ * @param int $entity_id
+ *   Entity ID.
+ * @param string $allowed_entityqueue
+ *   Name of the allowed entityqueue.
+ *
+ * @return array
+ *   Values needed to render a checkbox.
+ */
+function _prepare_checkbox($entity_id, $allowed_entityqueue) {
+  // Get all checked queues for this entity.
+  $query_checked_queues = \Drupal::database()->select('entity_subqueue__items')
     ->distinct()
     ->condition('items_target_id', $entity_id);
   $query_checked_queues->addField('entity_subqueue__items', 'entity_id');
   $result_checked_queues = array_keys($query_checked_queues->execute()
     ->fetchAllAssoc('entity_id'));
 
-  $entity_subqueue = \Drupal::entityManager()
+  $entity_subqueue = \Drupal::entityTypeManager()
     ->getStorage('entity_subqueue')
     ->load($allowed_entityqueue);
+
   $number_of_items = count($entity_subqueue->get('items')->getValue());
 
   $queue_details = $entity_subqueue->getQueue();
@@ -159,12 +180,13 @@ function _prepair_checkbox($entity_id, $allowed_entityqueue) {
     $checked_flag = 1;
   }
   $queue = $entity_subqueue->getQueue();
-  if ($queue->getHandler() == 'multiple'){
+  if ($queue->getHandler() == 'multiple') {
     $title = $entity_subqueue->label() . ' (' . $queue->label() . ')';
   }
   else {
     $title = $entity_subqueue->label();
   }
+
   return [
     '#type' => 'checkbox',
     '#title' => t('@queue_title <i>(@number_of_items out of @$max_size items)</i>', [

@@ -10,13 +10,13 @@ use Drupal\Core\Controller\ControllerBase;
 class EntityQueueFormWidgetController extends ControllerBase {
 
   /**
-   * Content method: used to show module home page content.
+   * Show module home page content.
    */
   public function content() {
-    return array(
+    return [
       '#type' => 'markup',
-      '#markup' => t('Entity Queue Form Widget Custom Page'),
-    );
+      '#markup' => $this->t('Entity Queue Form Widget Custom Page'),
+    ];
   }
 
 }
