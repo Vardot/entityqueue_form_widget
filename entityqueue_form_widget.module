@@ -31,13 +31,15 @@ function entityqueue_form_widget_form_node_form_alter(&$form, FormStateInterface
       '#group' => 'advanced',
       '#tree' => TRUE,
       '#weight' => 100,
-      '#markup' => '<p>' . t('Choose from the available entityqueues below to push this content to. To reorder and manage each queue, please visit the @entityqueue_management_page', ['@entityqueue_management_page' => Link::fromTextAndUrl(t('Entityqueue management page'), $url)]) . '</p>',
+      '#markup' => '<p>' . t('Choose from the available entityqueues below to push this content to. To reorder and manage each queue, please visit the @entityqueue_management_page', ['@entityqueue_management_page' => Link::fromTextAndUrl(t('Entityqueue management page'), $url)->toString()]) . '</p>',
     ];
 
     $form['entityqueue_form_widget']['entityqueues'] = [];
     foreach ($allowed_entityqueues as $allowed_entityqueue_group) {
       foreach ($allowed_entityqueue_group as $allowed_entityqueue) {
-        if (\Drupal::currentUser()->hasPermission('update ' . $allowed_entityqueue . ' entityqueue') || \Drupal::currentUser()->hasPermission('manipulate all entityqueues')) {
+        if (\Drupal::currentUser()->hasPermission('update ' . $allowed_entityqueue . ' entityqueue')
+          || \Drupal::currentUser()->hasPermission('manipulate all entityqueues')) {
+
           $form['entityqueue_form_widget']['entityqueues'][$allowed_entityqueue] = _prepare_checkbox($entity_id, $allowed_entityqueue);
         }
       }
