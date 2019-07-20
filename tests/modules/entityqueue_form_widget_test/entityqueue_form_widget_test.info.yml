@@ -1,0 +1,13 @@
+name: 'Entityqueue Form Widget Test'
+description: 'Test content for Entityqueue Form Widget module.'
+type: module
+core: 8.x
+dependencies:
+  - drupal:field
+  - drupal:node
+  - drupal:path
+  - drupal:text
+  - drupal:user
+  - drupal:menu_ui
+  - entityqueue:entityqueue
+  - entityqueue_form_widget:entityqueue_form_widget
