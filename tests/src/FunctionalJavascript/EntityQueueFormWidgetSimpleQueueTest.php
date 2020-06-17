@@ -15,6 +15,11 @@ class EntityQueueFormWidgetSimpleQueueTest extends WebDriverTestBase {
   use StringTranslationTrait;
 
   /**
+   * {@inheritdoc}
+   */
+  protected $defaultTheme = 'bartik';
+
+  /**
    * Modules to install.
    *
    * @var array
