@@ -189,11 +189,6 @@ function _prepare_checkbox($entity_id, $allowed_entityqueue) {
     $title = $entity_subqueue->label();
   }
 
-  $checkbox_status = FALSE;
-  if (($number_of_items >= $max_size) && $checked_flag == 0) {
-    $checkbox_status = TRUE;
-  }
-
   return [
     '#type' => 'checkbox',
     '#title' => t('@queue_title <i>(@number_of_items out of @$max_size items)</i>', [
@@ -203,8 +198,5 @@ function _prepare_checkbox($entity_id, $allowed_entityqueue) {
     ]),
     '#default_value' => $checked_flag,
     '#id' => $allowed_entityqueue,
-    '#attributes' => [
-      'disabled' => $checkbox_status,
-    ],
   ];
 }
