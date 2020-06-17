@@ -7,19 +7,9 @@
   "minimum-stability": "dev",
   "authors": [
     {
-      "name": "Mohammed J. Razem",
-      "homepage": "https://www.drupal.org/u/mohammed-j-razem",
-      "role": "Maintainer"
-    },
-    {
-      "name": "Tareq Elayyan",
-      "homepage": "https://www.drupal.org/u/tareq_elayyan",
-      "role": "Maintainer"
-    },
-    {
-      "name": "Rajab Natshah",
-      "homepage": "https://www.drupal.org/u/rajabnatshah",
-      "role": "Maintainer"
+      "name": "Vardot",
+      "homepage": "https://www.drupal.org/vardot",
+      "role": "Initial building, ongoing maintenance and development"
     }
   ],
   "support": {
@@ -33,6 +23,7 @@
     }
   },
   "require": {
+    "drupal/core": "^8 || ^9",
     "drupal/entityqueue": "~1.0"
   },
   "extra": {
