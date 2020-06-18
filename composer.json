@@ -25,10 +25,5 @@
   "require": {
     "drupal/core": "^8 || ^9",
     "drupal/entityqueue": "~1.0"
-  },
-  "extra": {
-    "branch-alias": {
-      "dev-8.x-1.x": "8.1.x-dev"
-    }
   }
 }
