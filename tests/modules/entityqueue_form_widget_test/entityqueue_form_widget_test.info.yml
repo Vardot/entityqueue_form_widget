@@ -1,5 +1,5 @@
-name: 'Entityqueue Form Widget Test'
-description: 'Test content for Entityqueue Form Widget module.'
+name: "Entityqueue Form Widget Test"
+description: "Test content for Entityqueue Form Widget module."
 type: module
 core_version_requirement: ^8 || ^9
 dependencies:

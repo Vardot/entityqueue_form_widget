@@ -21,4 +21,4 @@ For a full description of the module, visit the project page:
 
 Install this module as usual, see
 
-https://www.drupal.org/docs/8/extending-drupal-8/installing-drupal-8-modules
+https://www.drupal.org/docs/extending-drupal/installing-modules
