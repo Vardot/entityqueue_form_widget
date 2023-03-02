@@ -18,7 +18,7 @@ class EntityQueueFormWidgetMultipleSubqueuesTest extends WebDriverTestBase {
   /**
    * {@inheritdoc}
    */
-  protected $defaultTheme = 'bartik';
+  protected $defaultTheme = 'olivero';
 
   /**
    * Modules to install.
@@ -46,7 +46,7 @@ class EntityQueueFormWidgetMultipleSubqueuesTest extends WebDriverTestBase {
   /**
    * {@inheritdoc}
    */
-  protected function setUp() {
+  protected function setUp(): void {
     parent::setUp();
 
     $subqueue = EntitySubqueue::create([

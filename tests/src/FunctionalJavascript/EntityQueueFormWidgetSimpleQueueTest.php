@@ -17,7 +17,7 @@ class EntityQueueFormWidgetSimpleQueueTest extends WebDriverTestBase {
   /**
    * {@inheritdoc}
    */
-  protected $defaultTheme = 'bartik';
+  protected $defaultTheme = 'olivero';
 
   /**
    * Modules to install.
@@ -45,7 +45,7 @@ class EntityQueueFormWidgetSimpleQueueTest extends WebDriverTestBase {
   /**
    * {@inheritdoc}
    */
-  protected function setUp() {
+  protected function setUp(): void {
     parent::setUp();
 
     $permissions = [
