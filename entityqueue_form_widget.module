@@ -72,7 +72,7 @@ function entityqueue_form_widget_form_node_form_submit($form, FormStateInterface
     $eqs_machine_names = array_keys($values['entityqueues'], "1");
     foreach ($eqs_machine_names as $eqs_machine_name) {
       $query = \Drupal::entityQuery('entity_subqueue')
-        ->accessCheck()
+        ->accessCheck(TRUE)
         ->condition('name', $eqs_machine_name);
       $result = $query->execute();
       $subqueues = EntitySubqueue::loadMultiple($result);
