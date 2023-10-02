@@ -10,9 +10,9 @@ parameters:
     - .
 
   excludePaths:
-    - */web/*
-    - */vender/*
-    - */node_modules/*
+    - web/*
+    - vendor/*
+    - node_modules/*
 
   ignoreErrors:
     # new static() is a best practice in Drupal, so we cannot fix that.
