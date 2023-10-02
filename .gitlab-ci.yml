@@ -143,7 +143,7 @@ stages:
   <<: [ *with-composer-cache, *default-job-settings-lint ]
   stage: 🪄 Lint
   script:
-    - php -d apc.enabled=0 -d apc.enable_cli=0 vendor/squizlabs/php_codesniffer/bin/phpcs --standard=./.phpcs.xml
+    - phpcs --standard=./.phpcs.xml
 
 '🧹 PHP Static Analysis (phpstan)':
   <<: [ *with-composer-cache, *default-job-settings-lint ]
