@@ -4,10 +4,11 @@
   <description>Default PHP CodeSniffer configuration for Drupal core.</description>
 
   <!--Exclude folders used by common frontend tools. These folders match the file_scan_ignore_directories setting in default.settings.php-->
-  <exclude-pattern>/node_modules/*</exclude-pattern>
-  <exclude-pattern>/web/*</exclude-pattern>
-  <exclude-pattern>/vender/*</exclude-pattern>
-  <file>.</file>
+  <exclude-pattern>*/bower_components/*</exclude-pattern>
+  <exclude-pattern>*/node_modules/*</exclude-pattern>
+  <exclude-pattern>./web/*</exclude-pattern>
+  <exclude-pattern>./vender/*</exclude-pattern>
+
 
   <!-- Only include specific sniffs that pass. This ensures that, if new sniffs are added, HEAD does not fail.-->
 

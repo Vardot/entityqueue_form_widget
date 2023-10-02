@@ -74,6 +74,7 @@ function entityqueue_form_widget_form_node_form_submit($form, FormStateInterface
         ->accessCheck(TRUE)
         ->condition('name', $eqs_machine_name);
       $result = $query->execute();
+      /** @var Drupal\entityqueue\Entity\EntitySubqueue $subqueues */
       $subqueues = EntitySubqueue::loadMultiple($result);
 
       foreach ($subqueues as $subqueue) {
@@ -136,6 +137,7 @@ function entityqueue_form_widget_form_node_form_submit($form, FormStateInterface
  */
 function entity_qget_allowed_subque_list($node) {
   $allowed_entityqueues = [];
+  /** @var Drupal\entityqueue\Entity\EntitySubqueue $subqueues */
   $subqueues = EntitySubqueue::loadMultiple();
 
   if (isset($subqueues) && count($subqueues) > 0) {
