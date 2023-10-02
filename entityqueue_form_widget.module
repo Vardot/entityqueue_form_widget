@@ -66,8 +66,9 @@ function entityqueue_form_widget_form_node_form_submit($form, FormStateInterface
   if (!$form_state->isValueEmpty('entityqueue_form_widget')) {
     $values = $form_state->getValue('entityqueue_form_widget');
 
-    /* Add entity to all checked queues */
-    $eqs_machine_names = array_keys($values['entityqueues'], "1");
+    // When Adding entity to all checked queues.
+    // If the node was unpublished, do not attempt to add it to any entity queue.
+    $eqs_machine_names = $node->isPublished() ? array_keys($values['entityqueues'], "1") : [];
     foreach ($eqs_machine_names as $eqs_machine_name) {
       $query = \Drupal::entityQuery('entity_subqueue')
         ->accessCheck(TRUE)
@@ -104,8 +105,9 @@ function entityqueue_form_widget_form_node_form_submit($form, FormStateInterface
       }
     }
 
-    // Remove entity from all un-checked queues.
-    $eqs_machine_names_delete = array_keys($values['entityqueues'], "0");
+    // When Removing entity from all un-checked queues.
+    // If the node was unpublished, remove it from all enabled entity queues.
+    $eqs_machine_names_delete = $node->isPublished() ? array_keys($values['entityqueues'], "0") : array_keys($values['entityqueues']);
     foreach ($eqs_machine_names_delete as $eqs_machine_name) {
       $entity_subqueue = \Drupal::entityTypeManager()
         ->getStorage('entity_subqueue')
