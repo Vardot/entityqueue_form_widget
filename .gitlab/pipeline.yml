@@ -114,13 +114,13 @@ stages:
     <<: *composer-cache
   artifacts:
     expire_in: 1 week
-    expose_as: 'vendor'
+    expose_as: 'composer-vendor'
     paths:
       - vendor/
   script:
       - composer config --no-plugins allow-plugins.phpstan/extension-installer true
       - composer validate
-      - composer install
+      - composer instal -vvv
 
 '📦️ Yarn':
   <<: *default-job-settings
@@ -129,7 +129,7 @@ stages:
     <<: *yarn-cache
   artifacts:
     expire_in: 1 week
-    expose_as: 'node_modules'
+    expose_as: 'yarn-node_modules'
     paths:
       - node_modules/
   script:
