@@ -140,7 +140,7 @@ function entity_qget_allowed_subque_list($node) {
   /** @var Drupal\entityqueue\Entity\EntitySubqueue $subqueues */
   $subqueues = EntitySubqueue::loadMultiple();
 
-  if (isset($subqueues) && count($subqueues) > 0) {
+  if (count($subqueues) > 0) {
     foreach ($subqueues as $subqueue) {
       $queue = $subqueue->getQueue();
       if (isset($queue)) {

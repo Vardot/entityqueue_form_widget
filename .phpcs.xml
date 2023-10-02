@@ -6,9 +6,11 @@
   <!--Exclude folders used by common frontend tools. These folders match the file_scan_ignore_directories setting in default.settings.php-->
   <exclude-pattern>*/bower_components/*</exclude-pattern>
   <exclude-pattern>*/node_modules/*</exclude-pattern>
+  <exclude-pattern>./core/*</exclude-pattern>
   <exclude-pattern>./web/*</exclude-pattern>
   <exclude-pattern>./vender/*</exclude-pattern>
 
+  <file>.</file>
 
   <!-- Only include specific sniffs that pass. This ensures that, if new sniffs are added, HEAD does not fail.-->
 
