@@ -64,8 +64,6 @@ stages:
   cache:
     policy: pull
     <<: *yarn-cache
-  scripts:
-    - yarn install
 
 .default-stage: &default-stage
   stage: 🗜️ Test
@@ -133,6 +131,8 @@ stages:
     expose_as: 'node_modules'
     paths:
       - node_modules/
+  script:
+    - yarn install
 
 ################
 # Lint Jobs
