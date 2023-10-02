@@ -143,7 +143,7 @@ stages:
   <<: [ *with-composer-cache, *default-job-settings-lint ]
   stage: 🪄 Lint
   script:
-    - php vendor/bin/phpcs --standard=./.phpcs.xml .
+    - php vendor/squizlabs/php_codesniffer/bin/phpcs --standard=./.phpcs.xml .
 
 '🧹 PHP Static Analysis (phpstan)':
   <<: [ *with-composer-cache, *default-job-settings-lint ]
