@@ -115,8 +115,8 @@ stages:
     paths:
       - vendor/
   script:
-      - composer config --no-plugins allow-plugins.phpstan/extension-installer true
-      - composer config --no-plugins allow-plugins.dealerdirect/phpcodesniffer-composer-installer true
+      - composer global config --no-plugins allow-plugins.phpstan/extension-installer true
+      - composer global config --no-plugins allow-plugins.dealerdirect/phpcodesniffer-composer-installer true
       - composer global require drupal/coder
       - composer global require squizlabs/php_codesniffer
       - composer global require phpstan/phpstan
