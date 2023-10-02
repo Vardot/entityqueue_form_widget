@@ -13,6 +13,7 @@ parameters:
     - web/*
     - vendor/*
     - node_modules/*
+    - tests/*
 
   ignoreErrors:
     # new static() is a best practice in Drupal, so we cannot fix that.
