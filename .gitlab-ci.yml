@@ -7,6 +7,8 @@ include:
 variables:
   COMPOSER: composer.json
   COMPOSER_ROOT_VERSION: "${CI_MERGE_REQUEST_TARGET_BRANCH_NAME}${CI_COMMIT_BRANCH}-dev"
+  CONCURRENCY: 32
+  GIT_DEPTH: "3"
   _SHOW_ENVIRONMENT_VARIABLES: 1
 
 
@@ -120,7 +122,7 @@ stages:
       - composer config --no-plugins allow-plugins.phpstan/extension-installer true
       - composer config --no-plugins allow-plugins.dealerdirect/phpcodesniffer-composer-installer true
       - composer validate
-      - composer install -vvv
+      - composer install
 
 '📦️ Yarn':
   <<: *default-job-settings-lint
@@ -140,10 +142,10 @@ stages:
 ################
 
 '🧹 PHP Coding standards (PHPCS)':
-  <<: [ *with-composer-cache, *default-job-settings-lint ]
+  <<: [ *with-composer-cache, *with-yarn-cache, *default-job-settings-lint ]
   stage: 🪄 Lint
   script:
-    - phpcs --standard=./.phpcs.xml
+    - yarn phpcs
 
 '🧹 PHP Static Analysis (phpstan)':
   <<: [ *with-composer-cache, *default-job-settings-lint ]
