@@ -2,7 +2,6 @@ include:
   - project: $_GITLAB_TEMPLATES_REPO
     ref: $_GITLAB_TEMPLATES_REF
     file:
-      - '/includes/include.drupalci.main.yml'
       - '/includes/include.drupalci.variables.yml'
       - '/includes/include.drupalci.workflows.yml'
 variables:
@@ -114,12 +113,12 @@ stages:
     <<: *composer-cache
   artifacts:
     expire_in: 1 week
-    expose_as: 'vendor'
+    expose_as: 'composer-vendor'
     paths:
       - vendor/
   script:
       - composer validate
-      - composer install
+      - composer install -vvv
 
 '📦️ Yarn':
   <<: *default-job-settings-lint
@@ -128,7 +127,7 @@ stages:
     <<: *yarn-cache
   artifacts:
     expire_in: 1 week
-    expose_as: 'node_modules'
+    expose_as: 'yarn-node_modules'
     paths:
       - node_modules/
   script:
