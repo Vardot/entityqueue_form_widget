@@ -141,10 +141,10 @@ stages:
   <<: [ *with-composer-cache, *default-job-settings-lint ]
   stage: 🪄 Lint
   script:
-    - composer phpcs -- --report-junit=junit.xml --report-full --report-summary
+    - yarn phpcs
 
 '🧹 PHP Static Analysis (phpstan)':
   <<: [ *with-composer-cache, *default-job-settings-lint ]
   stage: 🪄 Lint
   script:
-    - php -d apc.enabled=0 -d apc.enable_cli=0 vendor/bin/phpstan analyze --configuration=phpstan.neon.dist --error-format=junit > junit.xml
+    - php vendor/bin/phpstan

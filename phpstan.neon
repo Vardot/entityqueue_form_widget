@@ -1,7 +1,5 @@
 # Configuration file for PHPStan static code checking, see https://phpstan.org .
-# PHPStan is triggered on Drupal CI in commit-code-check.sh.
 includes:
-  - phpstan-baseline.neon
   - phar://phpstan.phar/conf/bleedingEdge.neon
 
 parameters:
@@ -9,14 +7,13 @@ parameters:
   level: 1
 
   paths:
-    - .
-    - ../composer
+    - web/modules/contrib/entityqueue_form_widget
 
   excludePaths:
-    # Skip sites directory.
-    - ../sites
     # Skip test fixtures.
     - ../*/node_modules/*
+    - */tests/fixtures/*.php
+    - */tests/fixtures/*.php.gz
 
   ignoreErrors:
     # new static() is a best practice in Drupal, so we cannot fix that.
