@@ -118,9 +118,11 @@ stages:
       - composer config bin-dir bin
       - composer config --no-plugins allow-plugins.phpstan/extension-installer true
       - composer config --no-plugins allow-plugins.dealerdirect/phpcodesniffer-composer-installer true
-      - composer require phpstan/phpstan:~1.10.0
-      - composer require phpstan/extension-installer:~1.3.0
-      - composer require phpstan/phpstan-deprecation-rules:~1.1.0
+      - composer require drupal/coder
+      - composer require squizlabs/php_codesniffer
+      - composer require phpstan/phpstan
+      - composer require phpstan/extension-installer
+      - composer require phpstan/phpstan-deprecation-rules
       - composer validate
       - composer install
 
@@ -145,10 +147,10 @@ stages:
   <<: [ *with-composer-cache, *default-job-settings-lint ]
   stage: 🪄 Lint
   script:
-    - php -d apc.enabled=0 -d apc.enable_cli=0 ./bin/phpcs --standard=./.phpcs.xml .
+    - php -d apc.enabled=0 -d apc.enable_cli=0 bin/phpcs --standard=./.phpcs.xml .
 
 '🧹 PHP Static Analysis (phpstan)':
   <<: [ *with-composer-cache, *default-job-settings-lint ]
   stage: 🪄 Lint
   script:
-    - php -d apc.enabled=0 -d apc.enable_cli=0 ./bin/phpstan analyze --configuration=phpstan.neon
+    - php -d apc.enabled=0 -d apc.enable_cli=0 bin/phpstan analyze --configuration=phpstan.neon
