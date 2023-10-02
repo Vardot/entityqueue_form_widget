@@ -7,10 +7,16 @@ parameters:
   level: 1
 
   paths:
-    - .
+    - config
+    - src
+    - entityqueue_form_widget.info.yml
+    - entityqueue_form_widget.module
+    - entityqueue_form_widget.routing.yml
+    - README.md
 
   excludePaths:
-    - /web/*
-    - /vendor/*
-    - /node_modules/*
-    - /tests/*
+    - web/*
+    - vendor/*
+    - node_modules/*
+    - tests/*
+    - yarn.lock
