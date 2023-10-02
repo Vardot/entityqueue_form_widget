@@ -64,6 +64,8 @@ stages:
   cache:
     policy: pull
     <<: *yarn-cache
+  scripts:
+    - yarn install
 
 .default-stage: &default-stage
   stage: 🗜️ Test

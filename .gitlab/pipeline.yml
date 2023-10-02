@@ -24,6 +24,8 @@ stages:
       - ./yarn.lock
   paths:
     - ./node_modules
+  script:
+    - yarn install
 
 .with-composer-cache: &with-composer-cache
   dependencies:
@@ -131,7 +133,8 @@ stages:
     expose_as: 'node_modules'
     paths:
       - node_modules/
-
+  scripts:
+    - yarn install
 
 ################
 # Test Jobs
