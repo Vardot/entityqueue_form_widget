@@ -10,7 +10,7 @@ parameters:
     - .
 
   excludePaths:
-    - web/*
-    - vendor/*
-    - node_modules/*
-    - tests/*
+    - /web/*
+    - /vendor/*
+    - /node_modules/*
+    - /tests/*

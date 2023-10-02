@@ -115,6 +115,7 @@ stages:
     paths:
       - vendor/
   script:
+      - composer config minimum-stability dev
       - composer config --no-plugins allow-plugins.phpstan/extension-installer true
       - composer config --no-plugins allow-plugins.dealerdirect/phpcodesniffer-composer-installer true
       - composer validate
@@ -141,7 +142,7 @@ stages:
   <<: [ *with-composer-cache, *default-job-settings-lint ]
   stage: 🪄 Lint
   script:
-    - php vendor/squizlabs/php_codesniffer/bin/phpcs --standard=.phpcs.xml
+    - php vendor/squizlabs/php_codesniffer/bin/phpcs --standard=.phpcs.xml -vvv
 
 '🧹 PHP Static Analysis (phpstan)':
   <<: [ *with-composer-cache, *default-job-settings-lint ]
