@@ -7,11 +7,12 @@ parameters:
   level: 1
 
   paths:
-    - web/modules/contrib/entityqueue_form_widget
+    - .
 
   excludePaths:
-    # Skip test fixtures.
-    - ../*/node_modules/*
+    - web/*
+    - vender/*
+    - node_modules/*
     - */tests/fixtures/*.php
     - */tests/fixtures/*.php.gz
 
