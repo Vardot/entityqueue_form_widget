@@ -22,5 +22,5 @@ parameters:
     - yarn.lock
 
   ignoreErrors:
-    - "#^Call to static method loadMultiple\(\) on an unknown class#"
+    - '#Call to static method loadMultiple\(\) on an unknown class#'
 
