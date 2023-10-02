@@ -35,13 +35,11 @@ function entityqueue_form_widget_form_node_form_alter(&$form, FormStateInterface
     ];
 
     $form['entityqueue_form_widget']['entityqueues'] = [];
-    foreach ($allowed_entityqueues as $queue_id => $allowed_entityqueue_group) {
-      if (\Drupal::currentUser()->hasPermission('update ' . $queue_id . ' entityqueue')
+    foreach ($allowed_entityqueues as $allowed_entityqueue) {
+      if (\Drupal::currentUser()->hasPermission('update ' . $allowed_entityqueue['id'] . ' entityqueue')
         || \Drupal::currentUser()->hasPermission('manipulate all entityqueues')) {
 
-        foreach ($allowed_entityqueue_group as $allowed_entityqueue) {
-          $form['entityqueue_form_widget']['entityqueues'][$allowed_entityqueue] = _prepare_checkbox($entity_id, $allowed_entityqueue);
-        }
+        $form['entityqueue_form_widget']['entityqueues'][$allowed_entityqueue['id']] = _prepare_checkbox($entity_id, $allowed_entityqueue);
       }
     }
 
@@ -80,12 +78,28 @@ function entityqueue_form_widget_form_node_form_submit($form, FormStateInterface
       foreach ($subqueues as $subqueue) {
         $items = $subqueue->get('items')->getValue();
         if (($item_key = array_search($entity_id, array_column($items, 'target_id'))) === FALSE) {
-          $new_aitem = [
+          $new_item = [
             "target_id" => $entity_id,
           ];
-          array_push($items, $new_aitem);
-          $subqueue->set('items', $items);
-          $subqueue->save();
+          $settings = $subqueue->getQueue()->getQueueSettings();
+          if ($settings['reverse']) {
+            array_unshift($items, $new_item);
+          }
+          else {
+            $items[] = $new_item;
+          }
+
+          $checkbox_status = FALSE;
+          if ((count($items) > $settings['max_size'])
+            && !$settings['act_as_queue']
+            && ($settings['max_size'] != 0 || $settings['max_size'] != NULL)) {
+            $checkbox_status = TRUE;
+          }
+
+          if (!$checkbox_status) {
+            $subqueue->set('items', $items);
+            $subqueue->save();
+          }
         }
       }
     }
@@ -140,7 +154,8 @@ function entity_qget_allowed_subque_list($node) {
           && (empty($target_bundles) ||  in_array($node->bundle(), $target_bundles))) {
 
           $id = $queue->id();
-          $allowed_entityqueues[$id][] = $subqueue->id();
+          $allowed_entityqueues[$id]['id'] = $subqueue->id();
+          $allowed_entityqueues[$id]['act_as_queue_status'] = $queue->getActAsQueue();
         }
       }
     }
@@ -171,7 +186,7 @@ function _prepare_checkbox($entity_id, $allowed_entityqueue) {
 
   $entity_subqueue = \Drupal::entityTypeManager()
     ->getStorage('entity_subqueue')
-    ->load($allowed_entityqueue);
+    ->load($allowed_entityqueue['id']);
 
   $number_of_items = count($entity_subqueue->get('items')->getValue());
 
@@ -180,15 +195,24 @@ function _prepare_checkbox($entity_id, $allowed_entityqueue) {
   $max_size = ($max_size == '0' ? 'unlimited' : $max_size);
 
   $checked_flag = 0;
-  if (in_array($allowed_entityqueue, $result_checked_queues)) {
+  if (in_array($allowed_entityqueue['id'], $result_checked_queues)) {
     $checked_flag = 1;
   }
+
   $queue = $entity_subqueue->getQueue();
   if ($queue->getHandler() == 'multiple') {
     $title = $entity_subqueue->label() . ' (' . $queue->label() . ')';
   }
   else {
     $title = $entity_subqueue->label();
+  }
+
+  $checkbox_status = FALSE;
+  if (($number_of_items >= $max_size)
+    && $checked_flag == 0
+    && !$allowed_entityqueue['act_as_queue_status']
+    && ($max_size != 0 || $max_size != NULL)) {
+    $checkbox_status = TRUE;
   }
 
   return [
@@ -199,6 +223,9 @@ function _prepare_checkbox($entity_id, $allowed_entityqueue) {
       '@$max_size' => $max_size,
     ]),
     '#default_value' => $checked_flag,
-    '#id' => $allowed_entityqueue,
+    '#id' => $allowed_entityqueue['id'],
+    '#attributes' => [
+      'disabled' => $checkbox_status,
+    ],
   ];
 }
