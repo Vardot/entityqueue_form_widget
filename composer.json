@@ -25,5 +25,12 @@
   "require": {
     "drupal/core": "^8 || ^9 || ^10",
     "drupal/entityqueue": "~1.0"
+  },
+  "require-dev": {
+    "drupal/coder": "*",
+    "squizlabs/php_codesniffer": "*",
+    "phpstan/phpstan": "*",
+    "phpstan/extension-installer": "*",
+    "phpstan/phpstan-deprecation-rules": "*"
   }
 }
