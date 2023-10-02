@@ -6,7 +6,7 @@ A handy module to populate a form element in the sidebar of node's add and edit
  from add/edit forms.
 
 
-[![](https://www.drupal.org/files/styles/grid-3-2x/public/project-images/entityqueue_form_widget.png)](http://drupal.org/project/entityqueue_form_widget)
+[![](https://www.drupal.org/files/styles/grid-3-2x/public/project-images/entityqueue_form_widget-gin.png)](http://drupal.org/project/entityqueue_form_widget)
 
 For a full description of the module, visit the project page:
   http://drupal.org/project/entityqueue_form_widget

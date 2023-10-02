@@ -2,9 +2,10 @@
   "name": "entityqueue_form_widget",
   "description": "A handy module to populate a form element in the sidebar of node's add and edit pages to allow editors to add content to entityqueues directly from add/edit forms.",
   "private": true,
+  "license": "GPL-2.0",
   "engines": {
     "yarn": ">= 1.6",
-    "node": ">= 16.0"
+    "node": ">= 18.0"
   },
   "keywords": [
     "Drupal",
@@ -25,10 +26,23 @@
     "eslint-plugin-import": "^2.25.4",
     "eslint-plugin-jquery": "^1.5.1",
     "eslint-plugin-prettier": "^4.0.0",
-    "eslint-plugin-yml": "^0.14.0",
-    "eslint-plugin-jsx-a11y": "~6",
-    "eslint-plugin-react": "~7",
-    "eslint-plugin-react-hooks": "~4",
-    "prettier": "~2"
-  }
+    "eslint-plugin-yml": "^1.2.0",
+    "prettier": "^2.1.2",
+    "stylelint": "^15.5.0",
+    "stylelint-checkstyle-formatter": "^0.1.2",
+    "stylelint-config-standard": "^33.0.0",
+    "stylelint-order": "^6.0.3",
+    "nightwatch": "^2.3.9"
+  },
+  "browserslist": [
+    "last 2 Chrome major versions",
+    "last 2 Firefox major versions",
+    "last 2 Safari major versions",
+    "last 2 Edge major versions",
+    "last 2 Opera versions",
+    "last 2 iOS major versions",
+    "last 1 ChromeAndroid version",
+    "last 1 Samsung version",
+    "Firefox ESR"
+  ]
 }
