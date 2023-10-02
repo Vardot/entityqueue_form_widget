@@ -117,6 +117,7 @@ stages:
     paths:
       - vendor/
   script:
+      - composer global config --no-plugins allow-plugins.phpstan/extension-installer true
       - composer validate
       - composer install -vvv
 
