@@ -73,22 +73,9 @@ stages:
       - junit.xml
     reports:
       junit: junit.xml
-
-
-################
-# Stages
-#
-# Each job is assigned to a stage, defining the order in which the jobs are executed.
-# Jobs in the same stage run in parallel.
-#
-# If all jobs in a stage succeed, the pipeline will proceed to the next stage.
-# If any job in the stage fails, the pipeline will exit early.
-################
-
 .default-stage: &default-stage
   stage: 🗜️ Test
   trigger:
-    # Rely on the status of the child pipeline.
     strategy: depend
     include:
       - local: .gitlab-ci/pipeline.yml
@@ -151,10 +138,9 @@ stages:
     expire_in: 1 week
     expose_as: 'yarn-vendor'
     paths:
-      - core/node_modules/
+      - node_modules/
   script:
-    # Installs all core javascript dependencies and adds junit formatter.
-    - yarn --cwd ./core add stylelint-junit-formatter
+    - yarn add stylelint-junit-formatter
 
 ################
 # Lint Jobs
