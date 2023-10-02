@@ -24,7 +24,7 @@ class EntityQueueFormWidgetSimpleQueueTest extends WebDriverTestBase {
    *
    * @var array
    */
-  public static $modules = ['field',
+  protected static $modules = ['field',
     'filter',
     'node',
     'text',
