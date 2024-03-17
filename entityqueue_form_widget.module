@@ -78,30 +78,9 @@ function entityqueue_form_widget_form_node_form_submit($form, FormStateInterface
       $subqueues = EntitySubqueue::loadMultiple($result);
 
       foreach ($subqueues as $subqueue) {
-        $items = $subqueue->get('items')->getValue();
-        if (($item_key = array_search($entity_id, array_column($items, 'target_id'))) === FALSE) {
-          $new_item = [
-            "target_id" => $entity_id,
-          ];
-          $settings = $subqueue->getQueue()->getQueueSettings();
-          if ($settings['reverse']) {
-            array_unshift($items, $new_item);
-          }
-          else {
-            $items[] = $new_item;
-          }
-
-          $checkbox_status = FALSE;
-          if ((count($items) > $settings['max_size'])
-            && !$settings['act_as_queue']
-            && ($settings['max_size'] != 0 || $settings['max_size'] != NULL)) {
-            $checkbox_status = TRUE;
-          }
-
-          if (!$checkbox_status) {
-            $subqueue->set('items', $items);
-            $subqueue->save();
-          }
+        if (!$subqueue->hasItem($node)) {
+          $subqueue->addItem($node);
+          $subqueue->save();
         }
       }
     }
@@ -114,10 +93,8 @@ function entityqueue_form_widget_form_node_form_submit($form, FormStateInterface
         ->getStorage('entity_subqueue')
         ->load($eqs_machine_name);
 
-      $items = $entity_subqueue->get('items')->getValue();
-      if (($item_key = array_search($entity_id, array_column($items, 'target_id'))) !== FALSE) {
-        unset($items[$item_key]);
-        $entity_subqueue->set('items', $items);
+      if ($entity_subqueue->hasItem($node)) {
+        $entity_subqueue->removeItem($node);
         $entity_subqueue->save();
       }
     }
