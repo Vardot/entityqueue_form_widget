@@ -23,7 +23,7 @@
     }
   },
   "require": {
-    "drupal/core": "^8 || ^9 || ^10",
+    "drupal/core": "^10 || ^11",
     "drupal/entityqueue": "~1.1"
   },
   "require-dev": {
