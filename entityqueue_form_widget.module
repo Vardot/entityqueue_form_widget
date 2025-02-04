@@ -134,8 +134,8 @@ function entity_qget_allowed_subque_list($node) {
         if ($queue_settings['target_type'] == $node->getEntityTypeId()
           && (empty($target_bundles) ||  in_array($node->bundle(), $target_bundles))) {
 
-          $id = $queue->id();
-          $allowed_entityqueues[$id]['id'] = $subqueue->id();
+          $id = $subqueue->id();
+          $allowed_entityqueues[$id]['id'] = $id;
           $allowed_entityqueues[$id]['act_as_queue_status'] = $queue->getActAsQueue();
         }
       }
