@@ -1,0 +1,64 @@
+site_name: "Entityqueue Form Widget"
+repo_url: https://git.drupalcode.org/project/entityqueue_form_widget
+repo_name: drupal/entityqueue_form_widget
+edit_uri: /-/edit/2.0.x/docs/
+
+theme:
+  name: material
+  language: en
+  logo: logo.png
+  # favicon: favicon.ico
+  palette:
+    # Palette toggle for automatic mode
+    - media: "(prefers-color-scheme)"
+      primary: indigo
+      toggle:
+        icon: material/brightness-auto
+        name: Switch to light mode
+    # Palette toggle for light mode
+    - media: "(prefers-color-scheme: light)"
+      primary: indigo
+      scheme: default
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    # Palette toggle for dark mode
+    - media: "(prefers-color-scheme: dark)"
+      primary: indigo
+      scheme: slate
+      toggle:
+        icon: material/brightness-4
+        name: Switch to system preference
+  features:
+    # - navigation.tabs
+    # - navigation.tabs.sticky
+    - navigation.sections
+    # - navigation.expand
+
+nav:
+  - Introduction: "index.md"
+  - User Documentation:
+      - Installation and Setup: "1-users/0-installation.md"
+      - Using the Widget: "1-users/1-using-widget.md"
+      - Workflow: "1-users/2-workflow.md"
+      - Use Cases: "1-users/3-use-cases.md"
+  - Administrator Documentation:
+      - Configuration: "2-admins/0-configuration.md"
+      - Permissions: "2-admins/1-permissions.md"
+      - Queue Management: "2-admins/2-queue-management.md"
+      - Performance: "2-admins/3-performance.md"
+  - Developer Documentation:
+      - Customization: "3-developers/0-customization.md"
+      - API Reference: "3-developers/1-api-reference.md"
+      - Architecture: "3-developers/2-architecture.md"
+      - Theme Integration: "3-developers/3-theme-integration.md"
+  - Frequently Asked Questions: "faq.md"
+
+plugins:
+  - search
+  - privacy:
+      enabled: !ENV [CI, false]
+
+markdown_extensions:
+  # - markdown.extensions.admonition
+  - pymdownx.extra
