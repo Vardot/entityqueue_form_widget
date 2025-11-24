@@ -26,6 +26,8 @@
     "phpstan",
     "drupal",
     "Drupal",
+    "drush",
+    "Drush",
     "subqueue",
     "subqueues",
     "subque",
@@ -39,6 +41,14 @@
     "codesniffer",
     "qget",
     "phar",
-    "olivero"
+    "olivero",
+    "editability",
+    "unfeatured",
+    "unfeature",
+    "Automations",
+    "sqlq",
+    "mymodule",
+    "strpos",
+    "endfor"
   ]
 }
