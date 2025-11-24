@@ -1,7 +1,5 @@
 # Entityqueue Form Widget
 
-![Entityqueue Form Widget](logo.png)
-
 A handy module to populate a form element in the sidebar of node's add and edit pages to allow editors to add content to entityqueues directly from add/edit forms. This module streamlines content queue management by making queue assignment available during content creation and editing, eliminating the need to navigate to separate queue administration pages.
 
 ## Overview
@@ -228,7 +226,6 @@ If the form widget is slow with many queues:
 
 ## Version Information
 
-* **Current Version**: 2.0.7 (stable, released June 2024)
 * **Drupal Compatibility**: Drupal 10 and 11
 * **Status**: Covered by Drupal Security Advisory Policy
 * **Maintainer**: [Vardot](https://vardot.com)
