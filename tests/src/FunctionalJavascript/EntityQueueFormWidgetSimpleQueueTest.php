@@ -66,9 +66,9 @@ class EntityQueueFormWidgetSimpleQueueTest extends WebDriverTestBase {
   public function testEntityQueueFormWidgetSimpleQueue() {
     $this->drupalGet('/node/add/test_content');
     $this->assertSession()->waitForElementVisible('css', '#edit-entityqueue-form-widget');
-    $entityqeues_settings_text = $this->t('Entityqueues settings');
-    $this->assertSession()->pageTextContains($entityqeues_settings_text);
-    $this->clickLink($entityqeues_settings_text);
+    $entityqueues_settings_text = $this->t('Entityqueues settings');
+    $this->assertSession()->pageTextContains($entityqueues_settings_text);
+    $this->clickLink($entityqueues_settings_text);
 
     $test_simple_queue_text = $this->t("Test Queue");
     $this->assertSession()->pageTextContains($test_simple_queue_text);

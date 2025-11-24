@@ -90,9 +90,9 @@ class EntityQueueFormWidgetMultipleSubqueuesTest extends WebDriverTestBase {
 
     $this->drupalGet('/node/add/queued_content');
     $this->assertSession()->waitForElementVisible('css', '#edit-entityqueue-form-widget');
-    $entityqeues_settings_text = $this->t('Entityqueues settings');
-    $this->assertSession()->pageTextContains($entityqeues_settings_text);
-    $this->clickLink($entityqeues_settings_text);
+    $entityqueues_settings_text = $this->t('Entityqueues settings');
+    $this->assertSession()->pageTextContains($entityqueues_settings_text);
+    $this->clickLink($entityqueues_settings_text);
 
     $test_multiple_subqueues_1_text = $this->t("Subqueue 1 (Test Multiple subqueues)");
     $test_multiple_subqueues_2_text = $this->t("Subqueue 2 (Test Multiple subqueues)");
