@@ -49,6 +49,7 @@
     "sqlq",
     "mymodule",
     "strpos",
-    "endfor"
+    "endfor",
+    "pymdownx"
   ]
 }
