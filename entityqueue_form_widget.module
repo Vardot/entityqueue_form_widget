@@ -65,9 +65,18 @@ function entityqueue_form_widget_form_node_form_submit($form, FormStateInterface
   if (!$form_state->isValueEmpty('entityqueue_form_widget')) {
     $values = $form_state->getValue('entityqueue_form_widget');
 
+    // Initialize variables with default values.
+    $publish_on_timestamp_value = null;
+
+    // Check if the node has the 'publish_on' field.
+    if ($node->hasField('publish_on') && $node->get('publish_on')->getValue()) {
+      // Get publish on timestamp.
+      $publish_on_timestamp_value = $node->get('publish_on')->getValue()[0]['value'];
+    }
+
     // When Adding entity to all checked queues.
     // If the node was unpublished, do not attempt to add it to any entity queue.
-    $eqs_machine_names = $node->isPublished() ? array_keys($values['entityqueues'], "1") : [];
+    $eqs_machine_names = $node->isPublished() || isset($publish_on_timestamp_value) ? array_keys($values['entityqueues'], "1") : [];
     foreach ($eqs_machine_names as $eqs_machine_name) {
       $query = \Drupal::entityQuery('entity_subqueue')
         ->accessCheck(TRUE)
