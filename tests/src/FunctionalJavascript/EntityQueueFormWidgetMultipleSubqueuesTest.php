@@ -2,6 +2,8 @@
 
 namespace Drupal\Tests\entityqueue_form_widget\FunctionalJavascript;
 
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 use Drupal\FunctionalJavascriptTests\WebDriverTestBase;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\entityqueue\Entity\EntitySubqueue;
@@ -11,6 +13,8 @@ use Drupal\entityqueue\Entity\EntitySubqueue;
  *
  * @group entityqueue_form_widget
  */
+#[Group('entityqueue_form_widget')]
+#[RunTestsInSeparateProcesses]
 class EntityQueueFormWidgetMultipleSubqueuesTest extends WebDriverTestBase {
 
   use StringTranslationTrait;

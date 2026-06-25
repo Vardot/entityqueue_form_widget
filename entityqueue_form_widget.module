@@ -5,51 +5,17 @@
  * Allows editors to add content to an entityqueue from the same add/edit form.
  */
 
+use Drupal\Core\Hook\Attribute\LegacyHook;
+use Drupal\entityqueue_form_widget\Hook\EntityqueueFormWidgetHooks;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\Core\Url;
-use Drupal\Core\Link;
 use Drupal\entityqueue\Entity\EntitySubqueue;
 
 /**
  * Implements hook_form_node_form_alter().
  */
+#[LegacyHook]
 function entityqueue_form_widget_form_node_form_alter(&$form, FormStateInterface $form_state) {
-
-  $node = $form_state->getFormObject()->getEntity();
-  $entity_id = $node->id();
-
-  // Works with entityqueue module version 8.x-1.0-alpha6 .
-  $allowed_entityqueues = entity_qget_allowed_subque_list($node);
-
-  // Check if there is any entityqueues to show/not show the widget.
-  if (!empty($allowed_entityqueues)) {
-
-    $url = Url::fromRoute('entity.entity_queue.collection');
-    $form['entityqueue_form_widget'] = [
-      '#type' => 'details',
-      '#title' => t('Entityqueues settings'),
-      '#group' => 'advanced',
-      '#tree' => TRUE,
-      '#weight' => 100,
-      '#markup' => '<p>' . t('Choose from the available entityqueues below to push this content to. To reorder and manage each queue, please visit the @entityqueue_management_page', ['@entityqueue_management_page' => Link::fromTextAndUrl(t('Entityqueue management page'), $url)->toString()]) . '</p>',
-    ];
-
-    $form['entityqueue_form_widget']['entityqueues'] = [];
-    foreach ($allowed_entityqueues as $allowed_entityqueue) {
-      if (\Drupal::currentUser()->hasPermission('update ' . $allowed_entityqueue['id'] . ' entityqueue')
-        || \Drupal::currentUser()->hasPermission('manipulate all entityqueues')) {
-
-        $form['entityqueue_form_widget']['entityqueues'][$allowed_entityqueue['id']] = _prepare_checkbox($entity_id, $allowed_entityqueue);
-      }
-    }
-
-    // Calling submit handler.
-    foreach (array_keys($form['actions']) as $action) {
-      if ($action != 'preview' && isset($form['actions'][$action]['#type']) && $form['actions'][$action]['#type'] === 'submit') {
-        $form['actions'][$action]['#submit'][] = 'entityqueue_form_widget_form_node_form_submit';
-      }
-    }
-  }
+  \Drupal::service(EntityqueueFormWidgetHooks::class)->formNodeFormAlter($form, $form_state);
 }
 
 /**
@@ -66,7 +32,7 @@ function entityqueue_form_widget_form_node_form_submit($form, FormStateInterface
     $values = $form_state->getValue('entityqueue_form_widget');
 
     // Initialize variables with default values.
-    $publish_on_timestamp_value = null;
+    $publish_on_timestamp_value = NULL;
 
     // Check if the node has the 'publish_on' field.
     if ($node->hasField('publish_on') && $node->get('publish_on')->getValue()) {

@@ -1,0 +1,5 @@
+
+services:
+  Drupal\entityqueue_form_widget\Hook\EntityqueueFormWidgetHooks:
+    class: Drupal\entityqueue_form_widget\Hook\EntityqueueFormWidgetHooks
+    autowire: true
