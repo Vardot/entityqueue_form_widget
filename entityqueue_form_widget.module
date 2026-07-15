@@ -74,6 +74,16 @@ function entityqueue_form_widget_form_node_form_submit($form, FormStateInterface
       $publish_on_timestamp_value = $node->get('publish_on')->getValue()[0]['value'];
     }
 
+    // Check if there's a published version of this node (any revision).
+    $published_revisions = \Drupal::entityTypeManager()->getStorage('node')
+      ->getQuery()
+      ->condition('nid', $node->id())
+      ->condition('status', 1)
+      ->allRevisions()
+      ->accessCheck(FALSE)
+      ->execute();
+    $has_published_version = !empty($published_revisions);
+
     // When Adding entity to all checked queues.
     // If the node was unpublished, do not attempt to add it to any entity queue.
     $eqs_machine_names = $node->isPublished() || isset($publish_on_timestamp_value) ? array_keys($values['entityqueues'], "1") : [];
@@ -94,8 +104,9 @@ function entityqueue_form_widget_form_node_form_submit($form, FormStateInterface
     }
 
     // When Removing entity from all un-checked queues.
-    // If the node was unpublished, remove it from all enabled entity queues.
-    $eqs_machine_names_delete = $node->isPublished() ? array_keys($values['entityqueues'], "0") : array_keys($values['entityqueues']);
+    // Only remove from unchecked queues if a published version exists.
+    // If there's no published version, remove from all queues.
+    $eqs_machine_names_delete = $has_published_version ? array_keys($values['entityqueues'], "0") : array_keys($values['entityqueues']);
     foreach ($eqs_machine_names_delete as $eqs_machine_name) {
       $entity_subqueue = \Drupal::entityTypeManager()
         ->getStorage('entity_subqueue')
