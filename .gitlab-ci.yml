@@ -6,14 +6,14 @@ include:
       - "/includes/include.drupalci.variables.yml"
       - "/includes/include.drupalci.workflows.yml"
 composer-lint:
-  allow_failure: true
+  allow_failure: false
 cspell:
   allow_failure: false
 eslint:
-  allow_failure: true
+  allow_failure: false
 phpcs:
-  allow_failure: true
+  allow_failure: false
 phpstan:
-  allow_failure: true
+  allow_failure: false
 phpunit:
   allow_failure: false

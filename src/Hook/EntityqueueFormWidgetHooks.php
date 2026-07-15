@@ -3,16 +3,29 @@
 namespace Drupal\entityqueue_form_widget\Hook;
 
 use Drupal\Core\Link;
+use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Url;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Hook\Attribute\Hook;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 
 /**
  * Hook implementations for entityqueue_form_widget.
  */
 class EntityqueueFormWidgetHooks {
   use StringTranslationTrait;
+
+  /**
+   * Constructs the hook implementations service.
+   *
+   * @param \Drupal\Core\Session\AccountInterface $currentUser
+   *   The current user.
+   */
+  public function __construct(
+    #[Autowire(service: 'current_user')]
+    protected AccountInterface $currentUser,
+  ) {}
 
   /**
    * Implements hook_form_node_form_alter().
@@ -38,7 +51,7 @@ class EntityqueueFormWidgetHooks {
       ];
       $form['entityqueue_form_widget']['entityqueues'] = [];
       foreach ($allowed_entityqueues as $allowed_entityqueue) {
-        if (\Drupal::currentUser()->hasPermission('update ' . $allowed_entityqueue['id'] . ' entityqueue') || \Drupal::currentUser()->hasPermission('manipulate all entityqueues')) {
+        if ($this->currentUser->hasPermission('update ' . $allowed_entityqueue['id'] . ' entityqueue') || $this->currentUser->hasPermission('manipulate all entityqueues')) {
           $form['entityqueue_form_widget']['entityqueues'][$allowed_entityqueue['id']] = _prepare_checkbox($entity_id, $allowed_entityqueue);
         }
       }

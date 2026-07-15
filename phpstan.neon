@@ -21,6 +21,3 @@ parameters:
     - tests/*
     - yarn.lock
 
-  ignoreErrors:
-    - '#Call to static method loadMultiple\(\) on an unknown class#'
-
