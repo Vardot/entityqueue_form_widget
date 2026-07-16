@@ -1,0 +1,25 @@
+_meta:
+  version: '1.0'
+  entity_type: entity_subqueue
+  uuid: a0207bd4-402c-4f12-ae7e-36788a6b41b3
+  bundle: test_multiple_subqueues
+  default_langcode: en
+default:
+  name:
+    -
+      value: subqueue_3
+  revision_user:
+    -
+      target_id: 0
+  status:
+    -
+      value: true
+  uid:
+    -
+      target_id: 0
+  title:
+    -
+      value: 'Subqueue 3'
+  revision_translation_affected:
+    -
+      value: true

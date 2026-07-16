@@ -1,0 +1,28 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.queued_content
+    - node.type.test_content
+  module:
+    - entityqueue
+    - node
+    - system
+id: entityqueue_test_editor
+label: 'Entityqueue test editor'
+weight: 2
+is_admin: false
+permissions:
+  - 'access administration pages'
+  - 'access content'
+  - 'access content overview'
+  - 'administer nodes'
+  - 'create queued_content content'
+  - 'create test_content content'
+  - 'delete any queued_content content'
+  - 'delete any test_content content'
+  - 'edit any queued_content content'
+  - 'edit any test_content content'
+  - 'manipulate all entityqueues'
+  - 'view own unpublished content'
+  - 'view the administration theme'

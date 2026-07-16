@@ -1,0 +1,20 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.test_content
+  module:
+    - node
+    - system
+id: entityqueue_test_basic
+label: 'Entityqueue test basic editor'
+weight: 3
+is_admin: false
+permissions:
+  - 'access administration pages'
+  - 'access content'
+  - 'access content overview'
+  - 'administer nodes'
+  - 'create test_content content'
+  - 'edit any test_content content'
+  - 'view the administration theme'

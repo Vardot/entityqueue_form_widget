@@ -1,0 +1,29 @@
+_meta:
+  version: '1.0'
+  entity_type: user
+  uuid: 66e853f9-16dd-4dde-bdc0-b19bdcc8e8f7
+  default_langcode: en
+default:
+  preferred_langcode:
+    -
+      value: en
+  name:
+    -
+      value: eqfw_editor
+  pass:
+    -
+      value: $2y$12$/FBFk5KdhPJkAuBHhs2xN.Vm.t8PQ8n.WTLurlAKbpi4pvnXf0Cf6
+      pre_hashed: true
+      existing: null
+  status:
+    -
+      value: true
+  access:
+    -
+      value: 0
+  login:
+    -
+      value: 0
+  roles:
+    -
+      target_id: entityqueue_test_editor
