@@ -1,0 +1,14 @@
+{
+  "name": "entityqueue-form-widget-functional-acceptance",
+  "version": "1.0.0",
+  "private": true,
+  "description": "webship-js (Playwright + Cucumber) functional acceptance tests for the Entityqueue Form Widget module.",
+  "scripts": {
+    "test": "cucumber-js --config cucumber.js",
+    "test:chromium": "BROWSER=chromium cucumber-js --config cucumber.js",
+    "test:headed": "HEADLESS=false SLOW_MO=300 cucumber-js --config cucumber.js"
+  },
+  "devDependencies": {
+    "webship-js": ">=2.0.4"
+  }
+}

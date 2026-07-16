@@ -42,6 +42,7 @@ nav:
       - Using the Widget: "1-users/1-using-widget.md"
       - Workflow: "1-users/2-workflow.md"
       - Use Cases: "1-users/3-use-cases.md"
+      - Usage Scenarios: "1-users/4-usage-scenarios.md"
   - Administrator Documentation:
       - Configuration: "2-admins/0-configuration.md"
       - Permissions: "2-admins/1-permissions.md"
@@ -52,6 +53,7 @@ nav:
       - API Reference: "3-developers/1-api-reference.md"
       - Architecture: "3-developers/2-architecture.md"
       - Theme Integration: "3-developers/3-theme-integration.md"
+      - Automated Testing: "3-developers/4-automated-testing.md"
   - Frequently Asked Questions: "faq.md"
 
 plugins:

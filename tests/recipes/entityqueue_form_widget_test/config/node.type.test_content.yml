@@ -9,8 +9,8 @@ third_party_settings:
     parent: ""
 name: "Test Content"
 type: test_content
-description: ""
-help: ""
+description: "Test content type provided by the Entityqueue Form Widget test recipe."
+help: "Fill in the fields to create test content for the entityqueue widget."
 new_revision: true
 preview_mode: 1
 display_submitted: false

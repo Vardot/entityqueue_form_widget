@@ -1,0 +1,16 @@
+name: 'Entityqueue Form Widget Test'
+description: 'Test fixtures (content types, Body field, entityqueues) for the Entityqueue Form Widget automated tests. Replaces the former entityqueue_form_widget_test module.'
+type: 'Testing'
+install:
+  - node
+  - text
+  - filter
+  - path
+  - menu_ui
+  - user
+  - entityqueue
+  - entityqueue_form_widget
+config:
+  import:
+    filter:
+      - filter.format.plain_text
