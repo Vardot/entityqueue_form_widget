@@ -10,7 +10,6 @@ parameters:
     - config
     - src
     - entityqueue_form_widget.info.yml
-    - entityqueue_form_widget.module
     - entityqueue_form_widget.routing.yml
     - README.md
 

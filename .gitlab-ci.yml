@@ -17,3 +17,10 @@ phpstan:
   allow_failure: false
 phpunit:
   allow_failure: false
+composer:
+  variables:
+    # The gitlab_templates default-ref currently pins DRUPAL_CORE (CORE_STABLE)
+    # to 11.3.12, which is below this branch's core_version_requirement
+    # (^11.4 || ^12). Pin the "current" variant to a released ^11.4 core so
+    # the composer + phpunit jobs install a compatible Drupal core.
+    DRUPAL_CORE: '11.4.3'
