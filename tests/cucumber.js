@@ -1,4 +1,4 @@
-// Cucumber-js configuration for the Entityqueue Form Widget webship-js suite.
+// Cucumber-js configuration for the Entityqueue Form Widget varbase-e2e suite.
 //
 // Run from this directory (tests):
 //   LAUNCH_URL=http://web:8899 BROWSER=chromium npm test
@@ -14,15 +14,15 @@ module.exports = {
     // tsx/cjs lets cucumber-js load the .ts playwright.config with no build.
     requireModule: ['tsx/cjs'],
     require: [
-      // webship-js core step definitions (hundreds of steps).
-      'node_modules/webship-js/tests/step-definitions/**/*.js',
+      // varbase-e2e core step definitions (hundreds of steps).
+      'node_modules/@vardot/varbase-e2e/tests/step-definitions/**/*.js',
       // Project custom step definitions (login helper).
       'step-definitions/**/*.js',
     ],
     paths: ['features/**/*.feature'],
     format: [
       '@cucumber/pretty-formatter',
-      // webship-js auto-generates the HTML report from tests/reports/.
+      // varbase-e2e auto-generates the HTML report from tests/reports/.
       'json:reports/cucumber_report.json',
     ],
     worldParameters: {

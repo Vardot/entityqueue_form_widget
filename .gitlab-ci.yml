@@ -17,14 +17,14 @@ phpstan:
   allow_failure: false
 phpunit:
   allow_failure: false
-# Automated Functional Testing with webship-js (Playwright + Cucumber-js).
+# Automated Functional Testing with varbase-e2e (Playwright + Cucumber-js).
 #
 # Installs Drupal on SQLite from the composer-job artifacts, applies the
 # entityqueue_form_widget_test recipe (test users/roles/subqueues/fixture
 # content ship as recipe content + config -- no separate seed scripts),
 # serves the site via drush runserver and runs the Gherkin acceptance
 # suite headless in Chromium.
-webship:
+varbase-e2e:
   stage: test
   allow_failure: false
   image:
@@ -63,7 +63,7 @@ webship:
   - cd "$CI_PROJECT_DIR/tests"
   - npm install
   - npx playwright install --with-deps chromium || npx playwright install chromium
-  - LAUNCH_URL="$LAUNCH_URL" BROWSER=chromium HEADLESS=true SLOW_MO=0 WEBSHIP_REPORT_ARGS="--json reports/cucumber_report.json
+  - LAUNCH_URL="$LAUNCH_URL" BROWSER=chromium HEADLESS=true SLOW_MO=0 VARBASE_E2E_REPORT_ARGS="--json reports/cucumber_report.json
     --out reports/cucumber_report.html" npm test
   artifacts:
     when: always
