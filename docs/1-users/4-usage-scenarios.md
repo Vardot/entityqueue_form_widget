@@ -2,7 +2,7 @@
 
 This page describes the real-world editorial scenarios that the Entityqueue
 Form Widget supports. Each scenario is backed by an executable
-[webship-js](https://webship.co) feature file under
+[varbase-e2e](https://varbase-e2e.co) feature file under
 `tests/functional-acceptance/features/`, so the documentation and the automated
 acceptance tests stay in sync. The feature file that guards each behavior is
 linked at the end of every section.

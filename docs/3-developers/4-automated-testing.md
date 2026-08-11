@@ -5,7 +5,7 @@ test fixture recipe.
 
 | Layer | Tooling | Location |
 | --- | --- | --- |
-| Functional acceptance (BDD) | [webship-js](https://webship.co) (Playwright + Cucumber-js) | `tests/functional-acceptance/` |
+| Functional acceptance (BDD) | [varbase-e2e](https://varbase-e2e.co) (Playwright + Cucumber-js) | `tests/functional-acceptance/` |
 | Unit | PHPUnit | `tests/src/Unit/` |
 | Test fixtures | Drupal recipe | `tests/recipes/entityqueue_form_widget_test/` |
 
@@ -23,7 +23,7 @@ Apply it to an installed site with:
 drush recipe web/modules/contrib/entityqueue_form_widget/tests/recipes/entityqueue_form_widget_test
 ```
 
-## Functional acceptance suite (webship-js)
+## Functional acceptance suite (varbase-e2e)
 
 The `.feature` files under `tests/functional-acceptance/features/` describe the
 [usage scenarios](../1-users/4-usage-scenarios.md) in plain-English Gherkin and
@@ -74,8 +74,8 @@ The GitLab CI pipeline (`.gitlab-ci.yml`) runs, on every merge request:
 - the standard Drupal CI jobs — `composer-lint`, `cspell`, `eslint`, `phpcs`,
   `phpstan`;
 - `phpunit` — the unit tests above;
-- `webship` — installs Drupal on SQLite, applies the test recipe, seeds the
-  test users, starts a PHP web server and runs the full webship-js acceptance
+- `varbase-e2e` — installs Drupal on SQLite, applies the test recipe, seeds the
+  test users, starts a PHP web server and runs the full varbase-e2e acceptance
   suite headless in Chromium.
 
 Every job runs with `allow_failure: false`.
