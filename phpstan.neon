@@ -19,5 +19,5 @@ parameters:
     - vendor/*
     - node_modules/*
     - tests/*
-    - yarn.lock
+    - yarn.lock (?)
 
