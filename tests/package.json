@@ -3,12 +3,15 @@
   "version": "1.0.0",
   "private": true,
   "description": "varbase-e2e (Playwright + Cucumber) functional acceptance tests for the Entityqueue Form Widget module.",
+  "engines": {
+    "node": ">= 24.0"
+  },
   "scripts": {
     "test": "cucumber-js --config cucumber.js",
     "test:chromium": "BROWSER=chromium cucumber-js --config cucumber.js",
     "test:headed": "HEADLESS=false SLOW_MO=300 cucumber-js --config cucumber.js"
   },
   "devDependencies": {
-    "@vardot/varbase-e2e": "~2.0.1"
+    "@vardot/varbase-e2e": "^2.0.1"
   }
 }

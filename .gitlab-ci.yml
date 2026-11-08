@@ -5,6 +5,16 @@ include:
   - /includes/include.drupalci.main.yml
   - /includes/include.drupalci.variables.yml
   - /includes/include.drupalci.workflows.yml
+.composer-base:
+  variables:
+    # Drupal core's own Yarn 4.9.1 would read the project .yarnrc.yml (Yarn >= 4.14 keys) too.
+    YARN_RC_FILENAME: .yarnrc.core.yml
+    YARN_NODE_LINKER: node-modules
+stylelint:
+  variables:
+    # Drupal core's own Yarn 4.9.1 would read the project .yarnrc.yml (Yarn >= 4.14 keys) too.
+    YARN_RC_FILENAME: .yarnrc.core.yml
+    YARN_NODE_LINKER: node-modules
 composer-lint:
   allow_failure: false
 cspell:
@@ -73,4 +83,4 @@ varbase-e2e:
     - tests/screenshots/
 composer:
   variables:
-    DRUPAL_CORE: 11.4.3
+    DRUPAL_CORE: "11.4.11"
