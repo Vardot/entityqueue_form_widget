@@ -5,6 +5,9 @@ include:
   - /includes/include.drupalci.main.yml
   - /includes/include.drupalci.variables.yml
   - /includes/include.drupalci.workflows.yml
+variables:
+  # PHP 8.5 for the drupalci job images (the template default is PHP 8.3).
+  _TARGET_PHP: "8.5"
 .composer-base:
   variables:
     # Drupal core's own Yarn 4.9.1 would read the project .yarnrc.yml (Yarn >= 4.14 keys) too.
