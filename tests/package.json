@@ -12,6 +12,7 @@
     "test:headed": "HEADLESS=false SLOW_MO=300 cucumber-js --config cucumber.js"
   },
   "devDependencies": {
+    "@cucumber/cucumber": "^12.9.0",
     "@vardot/varbase-e2e": "^2.0.1"
   }
 }
